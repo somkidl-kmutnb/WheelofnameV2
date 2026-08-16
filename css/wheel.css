@@ -172,7 +172,8 @@ body.fullscreen-mode {
 
 body.fullscreen-mode .app-header,
 body.fullscreen-mode .sidebar-panel,
-body.fullscreen-mode .shortcut-hint {
+body.fullscreen-mode .shortcut-hint,
+body.fullscreen-mode .app-footer {
   display: none !important;
 }
 
