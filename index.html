@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>วงล้อสุ่มชื่อนักเรียน | Classroom Wheel of Names (No Ads)</title>
+  <meta name="description" content="เว็บสุ่มชื่อนักเรียนสำหรับคุณครูและห้องเรียน ไม่มีโฆษณา สุ่มลื่นไหล พร้อมระบบเสียง พลุกระดาษ และสุ่มแบ่งกลุ่ม">
+  <meta name="theme-color" content="#2563eb">
+
+  <!-- Google Fonts: Kanit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/wheel.css">
+  <link rel="stylesheet" href="css/modal.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+  <!-- Confetti Canvas Particle Overlay -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Exit Fullscreen Button (Visible in presentation mode) -->
+  <button id="exit-fullscreen-btn" class="exit-fullscreen-btn" title="ออกจากโหมดเต็มจอ (ESC)">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/>
+    </svg>
+    ออกจากโหมดเต็มจอ (ESC)
+  </button>
+
+  <div class="app-container">
+    <!-- Header Navigation -->
+    <header class="app-header">
+      <div class="brand-section">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="m12 2 4 10-10-4"/>
+            <path d="m12 22-4-10 10 4"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">
+            วงล้อสุ่มชื่อนักเรียน
+            <span class="brand-badge">Classroom Edition</span>
+          </h1>
+          <p class="brand-subtitle">สำหรับห้องเรียน โทนฟ้าสดใส ไม่มีโฆษณา ใช้งานง่ายบนทีวีและโปรเจกเตอร์</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="open-groups-btn" class="btn btn-secondary" title="สุ่มจัดกลุ่มนักเรียน">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          สุ่มจัดกลุ่ม (Teams)
+        </button>
+
+        <button id="fullscreen-btn" class="btn btn-secondary" title="ฉายเต็มจอสำหรับโปรเจกเตอร์">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+          </svg>
+          ฉายเต็มจอ
+        </button>
+
+        <button id="open-settings-btn" class="btn btn-icon" title="ตั้งค่าวงล้อ">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-layout">
+      <!-- Left Column: The Wheel Stage -->
+      <section class="wheel-stage-container">
+        <div class="wheel-wrapper">
+          <canvas id="wheel-canvas" width="600" height="600" title="คลิกเพื่อหมุนวงล้อ"></canvas>
+
+          <!-- Needle Pointer (Right Side) -->
+          <div id="wheel-pointer" class="wheel-pointer">
+            <svg viewBox="0 0 54 44" fill="none">
+              <!-- Pointer Triangle Shadow & Body -->
+              <path d="M4 22L48 4L48 40Z" fill="#dc2626" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round"/>
+              <path d="M12 22L44 8L44 36Z" fill="#ef4444"/>
+              <circle cx="44" cy="22" r="5" fill="#ffffff"/>
+            </svg>
+          </div>
+
+          <!-- Center Clickable Hub Button -->
+          <button id="center-spin-btn" class="center-spin-btn" title="คลิกเพื่อหมุน">
+            <span>หมุน</span>
+            <span style="font-size: 0.75rem; font-weight: 600; opacity: 0.85;">SPIN</span>
+          </button>
+        </div>
+
+        <!-- Controls below Wheel -->
+        <div class="stage-controls">
+          <button id="spin-btn" class="btn btn-primary btn-lg spin-action-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+            </svg>
+            หมุนวงล้อ (SPIN)
+          </button>
+
+          <button id="quick-pick-btn" class="btn btn-secondary quick-pick-btn" title="สุ่มผู้โชคดีทันทีไม่ต้องรอวงล้อ">
+            ⚡ สุ่มทันที
+          </button>
+        </div>
+
+        <div class="shortcut-hint">
+          <span>💡 เคล็ดลับ: กดปุ่ม</span>
+          <span class="kbd-badge">Spacebar</span>
+          <span>บนคีย์บอร์ดเพื่อหมุนวงล้อได้ทันที</span>
+        </div>
+      </section>
+
+      <!-- Right Column: Classroom & Names Management -->
+      <aside class="sidebar-panel">
+        <nav class="sidebar-tabs">
+          <button class="tab-btn active" data-tab="names">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            รายชื่อนักเรียน
+          </button>
+
+          <button class="tab-btn" data-tab="history">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            ประวัติการสุ่ม
+          </button>
+        </nav>
+
+        <!-- Tab 1: Names Management -->
+        <div id="tab-names" class="tab-content active">
+          <!-- Classroom Selector Box -->
+          <div class="class-selector-box">
+            <div class="class-header">
+              <label class="form-label" style="margin-bottom: 0;">🏫 เลือกห้องเรียน / วิชา:</label>
+              <button id="new-class-btn" class="btn btn-sm btn-primary" title="เพิ่มห้องเรียนใหม่">+ เพิ่มห้อง</button>
+            </div>
+            <div class="class-select-row">
+              <select id="class-select" class="form-control" style="font-weight: 600;"></select>
+              <button id="delete-class-btn" class="btn btn-sm btn-danger" title="ลบห้องเรียนนี้">ลบ</button>
+            </div>
+          </div>
+
+          <!-- Quick Stats Bar -->
+          <div class="names-stats-bar">
+            <span>รายชื่อในวงล้อ:</span>
+            <span id="names-count" class="stat-pill">0 คน</span>
+          </div>
+
+          <!-- Names Textarea -->
+          <div class="form-group">
+            <textarea id="names-input" class="form-textarea" placeholder="พิมพ์หรือวางรายชื่อนักเรียน (1 ชื่อต่อ 1 บรรทัด)..." spellcheck="false"></textarea>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="textarea-actions">
+            <button id="shuffle-btn" class="btn btn-secondary btn-sm" title="สลับตำแหน่งรายชื่อ">
+              🔀 สลับตำแหน่ง
+            </button>
+            <button id="sort-btn" class="btn btn-secondary btn-sm" title="เรียงลำดับ ก-ฮ">
+              📶 เรียง ก-ฮ
+            </button>
+            <button id="clear-names-btn" class="btn btn-secondary btn-sm" style="color: #dc2626;" title="ล้างรายชื่อ">
+              🗑️ ล้างทั้งหมด
+            </button>
+          </div>
+        </div>
+
+        <!-- Tab 2: History Tab -->
+        <div id="tab-history" class="tab-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <span style="font-weight: 600;">ผู้ที่ถูกสุ่มได้ล่าสุด:</span>
+            <button id="clear-history-btn" class="btn btn-sm btn-secondary" style="color: #dc2626;">ล้างประวัติ</button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Modal 1: Winner Celebration Dialog -->
+  <div id="winner-modal" class="modal-overlay winner-modal">
+    <div class="modal-box">
+      <div class="modal-body">
+        <div class="winner-crown">👑🎉</div>
+        <div class="winner-subtext">ผู้โชคดีได้แก่</div>
+        <div id="winner-name" class="winner-name-display">-</div>
+        
+        <div class="winner-actions">
+          <button id="remove-winner-btn" class="btn btn-danger">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            ลบชื่อนี้ออก (สุ่มคนต่อไป)
+          </button>
+          <button id="close-winner-btn" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            เก็บชื่อไว้ & ปิดหน้าต่าง
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Group Generator Dialog -->
+  <div id="groups-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+          </svg>
+          สุ่มจัดกลุ่มนักเรียน (Classroom Teams)
+        </h2>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: 12px; align-items: flex-end; margin-bottom: 16px;">
+          <div style="flex: 1;">
+            <label class="form-label">ต้องการแบ่งเป็นกี่กลุ่ม:</label>
+            <select id="group-count-select" class="form-control">
+              <option value="2">2 กลุ่ม</option>
+              <option value="3">3 กลุ่ม</option>
+              <option value="4" selected>4 กลุ่ม</option>
+              <option value="5">5 กลุ่ม</option>
+              <option value="6">6 กลุ่ม</option>
+              <option value="7">7 กลุ่ม</option>
+              <option value="8">8 กลุ่ม</option>
+            </select>
+          </div>
+          <button id="generate-groups-btn" class="btn btn-primary" style="height: 48px;">
+            🎲 สุ่มจัดกลุ่มใหม่
+          </button>
+        </div>
+
+        <div id="groups-result" class="groups-result-grid"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">ปิด</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Add New Class Dialog -->
+  <div id="new-class-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 440px;">
+      <div class="modal-header">
+        <h2 class="modal-title">เพิ่มห้องเรียนใหม่</h2>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">ชื่อห้องเรียน / ชั้นเรียน:</label>
+          <input type="text" id="new-class-name" class="form-control" placeholder="เช่น ม.2/1, กลุ่มวิทย์-คณิต...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">ยกเลิก</button>
+        <button id="save-new-class-btn" class="btn btn-primary">บันทึก</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Settings Dialog -->
+  <div id="settings-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2 class="modal-title">⚙️ ตั้งค่าวงล้อ</h2>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">ระยะเวลาการหมุน:</label>
+          <select id="duration-select" class="form-control">
+            <option value="3">3 วินาที (เร็วทันใจ)</option>
+            <option value="6" selected>6 วินาที (มาตรฐาน ตื่นเต้นกำลังดี)</option>
+            <option value="10">10 วินาที (ลุ้นระทึก)</option>
+            <option value="15">15 วินาที (ลุ้นยาวนาน)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="form-label" style="margin-bottom: 0;">🔊 เสียงประกอบ (Sound Effects):</label>
+          <input type="checkbox" id="sound-toggle" checked style="width: 20px; height: 20px; cursor: pointer;">
+        </div>
+
+        <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="form-label" style="margin-bottom: 0;">🎉 เอฟเฟกต์พลุกระดาษ (Confetti):</label>
+          <input type="checkbox" id="confetti-toggle" checked style="width: 20px; height: 20px; cursor: pointer;">
+        </div>
+
+        <div class="form-group" style="display: flex; justify-content: space-between; align-items: center;">
+          <label class="form-label" style="margin-bottom: 0;">☀️ โหมดความเปรียบต่างสูง (High Contrast):</label>
+          <input type="checkbox" id="contrast-toggle" style="width: 20px; height: 20px; cursor: pointer;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary modal-cancel-btn">ยกเลิก</button>
+        <button id="save-settings-btn" class="btn btn-primary">บันทึกการตั้งค่า</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App Entry -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "wheel-of-names-classroom",
+  "version": "2.0.0",
+  "description": "Classroom Wheel of Names - Fast, beautiful, no ads random picker for teachers",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve -l 3000 .",
+    "start": "npx serve -l 3000 ."
+  },
+  "keywords": [
+    "wheel-of-names",
+    "classroom",
+    "random-picker",
+    "thai-names",
+    "education"
+  ],
+  "author": "somkidl-kmutnb",
+  "license": "MIT"
+}

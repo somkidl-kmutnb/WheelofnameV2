@@ -1,0 +1,117 @@
+/* Responsive Breakpoints & TV/Projector Optimization */
+
+/* Large Screens (Smartboards, Projectors, 1440p+) */
+@media (min-width: 1400px) {
+  .brand-title {
+    font-size: 1.6rem;
+  }
+  .winner-name-display {
+    font-size: 3.8rem;
+  }
+  .wheel-wrapper {
+    max-width: 700px;
+  }
+}
+
+/* Tablets and Medium Screens (Below 1024px) */
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .sidebar-panel {
+    max-height: none;
+  }
+
+  .wheel-stage-container {
+    min-height: auto;
+    padding: 20px 10px;
+  }
+
+  .wheel-wrapper {
+    max-width: min(90vw, 520px);
+  }
+}
+
+/* Mobile Screens (Below 640px) */
+@media (max-width: 640px) {
+  .app-header {
+    padding: 10px 16px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .brand-title {
+    font-size: 1.2rem;
+  }
+
+  .brand-subtitle {
+    display: none;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .main-layout {
+    padding: 12px;
+  }
+
+  .wheel-stage-container {
+    padding: 14px 6px;
+    border-radius: var(--radius-lg);
+  }
+
+  .center-spin-btn {
+    width: 76px;
+    height: 76px;
+    font-size: 0.95rem;
+  }
+
+  .wheel-pointer {
+    width: 38px;
+    height: 32px;
+    right: -8px;
+  }
+
+  .spin-action-btn {
+    min-width: 160px;
+    font-size: 1.15rem;
+    padding: 12px 24px;
+  }
+
+  .winner-name-display {
+    font-size: 2.2rem;
+    padding: 12px 16px;
+  }
+
+  .winner-actions {
+    flex-direction: column;
+  }
+
+  .stage-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stage-controls .btn {
+    width: 100%;
+  }
+
+  .shortcut-hint {
+    display: none;
+  }
+}
+
+/* Print Optimization */
+@media print {
+  .app-header, .sidebar-panel, .stage-controls, .wheel-stage-container {
+    display: none !important;
+  }
+  .history-list, .groups-result-grid {
+    display: block !important;
+  }
+}
